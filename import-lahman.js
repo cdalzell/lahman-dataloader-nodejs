@@ -1,10 +1,14 @@
 var async = require('async'); // https://github.com/caolan/async
+var fs = require('fs');
 var minimist = require('minimist'); // https://www.npmjs.org/package/minimist
+var path = require('path');
 var prompt = require('prompt'); // https://github.com/flatiron/prompt
 
 /** Process Command Line Parameters */
 var argv = minimist(process.argv.slice(2));
 
+var dataDir = __dirname + '/data/';
+console.log(dataDir);
 //console.dir(argv);
 
 async.waterfall([
@@ -29,14 +33,39 @@ async.waterfall([
                 process.exit(0);
             } else {
                 // drop that db!
+                callback(null);
             }
         });
     },
     /** unzip file if need be */
-    function unzipFiles(arg1, callback) {
+    function unzipFiles(callback) {
+        console.log('unzipFiles');
         
+        fs.readdir(dataDir, function (err, files) {
+            var csvFound = false;
+            
+            for (var i = 0; i < files.length; i++) {
+                if (path.extname(files[i]).toLowerCase() === '.csv') {
+                    csvFound = true;
+                    
+                    break;
+                }
+            }
+           
+            if (csvFound) {
+                console.log('Files already unzipped, proceeding..');
+                callback(null, {});
+            } else {
+                // unzip files here
+                console.log('Unzipping data files..');
+                callback(null, {});
+            }
+        });
+    },
+    /** Create Tables */
+    function createTables(arg1, callback) {
+        console.log('createTables');
     }
-    /** create tables */
 
     /** if mongo, just going to loop over files and shove them on in */
     
