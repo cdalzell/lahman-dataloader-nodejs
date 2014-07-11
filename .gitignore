@@ -1,3 +1,4 @@
 data/*.csv
 data/readme2013.txt
 .project
+npm-debug.log
