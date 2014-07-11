@@ -3,6 +3,7 @@
     "version" : "1.0.0",
     "dependencies" : {
         "async" : "x",
+        "minimist" : "x",
         "mongodb" : "x"
     }
 }

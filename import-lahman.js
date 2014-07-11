@@ -1,4 +1,9 @@
-/** process cmd line parameters */
+var minimist = require('minimist');
+
+/** Process command line parameters */
+var argv = minimist(process.argv.slice(2));
+
+//console.dir(argv);
 
 /** confirm db drop */
 
