@@ -4,6 +4,7 @@
     "dependencies" : {
         "async" : "x",
         "minimist" : "x",
-        "mongodb" : "x"
+        "mongodb" : "x",
+        "prompt" : "x"
     }
 }
