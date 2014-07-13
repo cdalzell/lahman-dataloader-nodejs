@@ -17,10 +17,19 @@ var dataFilename = 'lahman-csv_2014-02-14.zip';
 
 var dbName = 'lahman';
 
+var dbConfig = {
+    Username : "admin",
+    Password : "admin",
+    Server : "localhost",
+    Port : 27017,
+    DBName : dbName,
+    CollectionName : "data"
+};
+
 //console.log(dataDir);
 //console.dir(argv);
 
-var dbSetup = new DBSetup(new MongoDBStrategy());
+var dbSetup = new DBSetup(dbConfig, new MongoDBStrategy());
 
 async.waterfall([
     /** Confirm DB Drop */
@@ -45,7 +54,6 @@ async.waterfall([
             } else {
                 // drop that db!
                 console.log('Dropping DB');
-                debugger;
                 dbSetup.dropDB();
                 
                 callback(null);

@@ -1,4 +1,10 @@
-var SetupStrategy = function() {};
+var SetupStrategy = function(config) {
+    this.config = config;
+};
+
+SetupStrategy.prototype.initialize = function() {
+    throw new Error('SetupStrategy#initialize needs to be overridden.');
+};
 
 SetupStrategy.prototype.dropDB = function() {
     throw new Error('SetupStrategy#dropDB needs to be overridden.');
