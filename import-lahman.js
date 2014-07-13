@@ -5,14 +5,22 @@ var minimist = require('minimist'); // https://www.npmjs.org/package/minimist
 var path = require('path');
 var prompt = require('prompt'); // https://github.com/flatiron/prompt
 
+/** DB setup */
+var DBSetup = require('./setup/DBSetup.js');
+var MongoDBStrategy = require('./setup/MongoDBStrategy.js');
+
 /** Process Command Line Parameters */
 var argv = minimist(process.argv.slice(2));
 
 var dataDir = __dirname + '/data/';
 var dataFilename = 'lahman-csv_2014-02-14.zip';
 
+var dbName = 'lahman';
+
 //console.log(dataDir);
 //console.dir(argv);
+
+var dbSetup = new DBSetup(new MongoDBStrategy());
 
 async.waterfall([
     /** Confirm DB Drop */
@@ -36,6 +44,10 @@ async.waterfall([
                 process.exit(0);
             } else {
                 // drop that db!
+                console.log('Dropping DB');
+                debugger;
+                dbSetup.dropDB();
+                
                 callback(null);
             }
         });
