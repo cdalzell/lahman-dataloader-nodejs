@@ -1,3 +1,4 @@
+var AdmZip = require('adm-zip');
 var async = require('async'); // https://github.com/caolan/async
 var fs = require('fs');
 var minimist = require('minimist'); // https://www.npmjs.org/package/minimist
@@ -8,7 +9,9 @@ var prompt = require('prompt'); // https://github.com/flatiron/prompt
 var argv = minimist(process.argv.slice(2));
 
 var dataDir = __dirname + '/data/';
-console.log(dataDir);
+var dataFilename = 'lahman-csv_2014-02-14.zip';
+
+//console.log(dataDir);
 //console.dir(argv);
 
 async.waterfall([
@@ -58,6 +61,11 @@ async.waterfall([
             } else {
                 // unzip files here
                 console.log('Unzipping data files..');
+                
+                var zip = new AdmZip(dataDir + dataFilename);
+                
+                zip.extractAllTo(dataDir, true);
+                
                 callback(null, {});
             }
         });
