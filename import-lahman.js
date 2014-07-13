@@ -32,6 +32,14 @@ var dbConfig = {
 var dbSetup = new DBSetup(dbConfig, new MongoDBStrategy());
 
 async.waterfall([
+    /** Initialize DB connection */
+    function initDB(callback) {
+        console.log('Connecting to DB');
+        
+        dbSetup.initialize(function(err) {
+            callback(err);
+        });
+    },
     /** Confirm DB Drop */
     function promptDBDrop(callback) {
         var schema = {

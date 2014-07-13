@@ -1,12 +1,10 @@
 var DBSetup = function(config, strategy) {
     this.config = config;
     this.strategy = strategy;
-    
-    this.initialize();
 };
 
-DBSetup.prototype.initialize = function() {
-    return this.strategy.initialize(this.config);
+DBSetup.prototype.initialize = function(callback) {
+    return this.strategy.initialize(this.config, callback);
 };
 
 DBSetup.prototype.dropDB = function() {

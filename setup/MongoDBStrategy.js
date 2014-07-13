@@ -10,9 +10,9 @@ var MongoDBStrategy = function() {
 
 MongoDBStrategy.prototype = Object.create(SetupStrategy.prototype);
 
-MongoDBStrategy.prototype.initialize = function(config) {
+MongoDBStrategy.prototype.initialize = function(config, callback) {
     console.log('Initializing DB connection');
-    
+
     // build mongo uri
     // ex: mongodb://demo_user:demo_password@ds027769.mongolab.com:27769/demo_database
     var mongoURI = 'mongodb://' + config.Username + ':' + config.Password + '@' + config.Server + ':' + config.Port + '/' + config.DBName;
@@ -21,9 +21,13 @@ MongoDBStrategy.prototype.initialize = function(config) {
         if (err) {
             throw err;
         }
-        
+
         this.db = database;
         this.collection = db.collection(config.CollectionName);
+        
+        console.log('Connection Made');
+        
+        callback(err);
     });
 };
 
