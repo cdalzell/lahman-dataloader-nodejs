@@ -4,6 +4,7 @@
     "dependencies" : {
         "adm-zip" : "x",
         "async" : "x",
+        "fast-csv" : "x",
         "minimist" : "x",
         "mongodb" : "x",
         "prompt" : "x"

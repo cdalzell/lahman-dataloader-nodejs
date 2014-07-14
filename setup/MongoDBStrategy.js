@@ -1,4 +1,5 @@
 var async = require('async');
+var csv = require('fast-csv'); // http://c2fo.github.io/fast-csv/index.html
 var mongo = require('mongodb');
 var path = require('path');
 
