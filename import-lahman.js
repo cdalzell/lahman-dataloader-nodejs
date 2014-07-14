@@ -14,6 +14,7 @@ var argv = minimist(process.argv.slice(2));
 
 var dataDir = __dirname + '/data/';
 var dataFilename = 'lahman-csv_2014-02-14.zip';
+var fileList;
 
 var dbName = 'lahman';
 
@@ -71,6 +72,8 @@ async.waterfall([
     /** unzip file if need be */
     function unzipFiles(callback) {
         fs.readdir(dataDir, function (err, files) {
+            fileList = files;
+            
             var csvFound = false;
             
             for (var i = 0; i < files.length; i++) {
@@ -107,7 +110,10 @@ async.waterfall([
     /** else special handlers for each table? there's got to be a better way! */
     function importData(arg1, callback) {
         console.log('Importing data.');
-        callback(null, {});
+        
+        dbSetup.importData(fileList, function(err) {
+            callback(null, {});
+        });
     },
     /** Add indexes, probably going to want to keep this basic. maybe offer more "thorough" options later */
     function addIndexes(arg1, callback) {

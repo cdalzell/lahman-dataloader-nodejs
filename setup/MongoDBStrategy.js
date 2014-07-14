@@ -1,4 +1,7 @@
+var async = require('async');
 var mongo = require('mongodb');
+var path = require('path');
+
 var SetupStrategy = require('./SetupStrategy.js');
 
 var mongoClient = new mongo.MongoClient();
@@ -40,6 +43,26 @@ MongoDBStrategy.prototype.dropDB = function(callback) {
 MongoDBStrategy.prototype.createTables = function(callback) {
     console.log('No tables to create for a document store!');
     callback(null);
+};
+
+MongoDBStrategy.prototype.importData = function(fileList, functionCallback) {
+    async.each(fileList, function(file, callback) {
+        if (path.extname(file).toLowerCase() === '.csv') {
+            var recordType = path.basename(file).split('.')[0];
+            console.log(recordType);
+            callback();
+        } else {
+            callback();
+        }
+    },
+    function asyncCallback(err) {
+        if (err) {
+            functionCallback(err);
+        } else {
+            console.log('Data import completeed.');
+            functionCallback(null);
+        }
+    });
 };
 
 module.exports = MongoDBStrategy;
