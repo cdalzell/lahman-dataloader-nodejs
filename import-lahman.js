@@ -59,12 +59,12 @@ async.waterfall([
             if (result.confirmDrop.toUpperCase() == 'N') {
                 console.log('Exiting program..');
                 process.exit(0);
-            } else {
-                // drop that db!
+            } else { // drop that db!
                 console.log('Dropping DB');
-                dbSetup.dropDB();
                 
-                callback(null);
+                dbSetup.dropDB(function(err) {
+                    callback(err);
+                });
             }
         });
     },
@@ -106,15 +106,25 @@ async.waterfall([
     /** if mongo, just going to loop over files and shove them on in */
     /** else special handlers for each table? there's got to be a better way! */
     function importData(arg1, callback) {
-        
-    }
-    
-
-    
+        console.log('Importing data.');
+        callback(null, {});
+    },
     /** Add indexes, probably going to want to keep this basic. maybe offer more "thorough" options later */
-    
+    function addIndexes(arg1, callback) {
+        console.log('Creating indexes.');
+        callback(null, {});
+    },
     /** delete extracted csv files */
-], function asyncWaterfallCallback(err, result) {
-    
-    console.log('hey, you\'re in the final waterfall callback!');
+    function deleteFiles(arg1, callback) {
+        console.log('Deleting data files.');
+        callback(null);
+    },
+], function waterfallCallback(err, result) {
+    if (err) {
+        console.log(err);
+        process.exit(1);
+    } else {
+        console.log('Data import complete!!');
+        process.exit(0);
+    }
 });

@@ -31,10 +31,10 @@ MongoDBStrategy.prototype.initialize = function(config, callback) {
     });
 };
 
-MongoDBStrategy.prototype.dropDB = function() {
-    //console.log(db);
-    console.log('in the mongo class');
-    
+MongoDBStrategy.prototype.dropDB = function(callback) {
+    collection.remove({}, function (err) {
+        callback(err);
+    });
 };
 
 MongoDBStrategy.prototype.createTables = function(callback) {
