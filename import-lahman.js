@@ -70,8 +70,6 @@ async.waterfall([
     },
     /** unzip file if need be */
     function unzipFiles(callback) {
-        console.log('unzipFiles');
-        
         fs.readdir(dataDir, function (err, files) {
             var csvFound = false;
             
@@ -85,27 +83,33 @@ async.waterfall([
            
             if (csvFound) {
                 console.log('Files already unzipped, proceeding..');
-                callback(null, {});
-            } else {
-                // unzip files here
+                callback(null);
+            } else { // unzip files here
                 console.log('Unzipping data files..');
                 
                 var zip = new AdmZip(dataDir + dataFilename);
                 
                 zip.extractAllTo(dataDir, true);
                 
-                callback(null, {});
+                callback(null);
             }
         });
     },
     /** Create Tables */
-    function createTables(arg1, callback) {
-        console.log('createTables');
-    }
-
+    function createTables(callback) {
+        console.log('Creating tables.');
+        
+        dbSetup.createTables(function(err) {
+            callback(err, {});
+        });
+    },
     /** if mongo, just going to loop over files and shove them on in */
-    
     /** else special handlers for each table? there's got to be a better way! */
+    function importData(arg1, callback) {
+        
+    }
+    
+
     
     /** Add indexes, probably going to want to keep this basic. maybe offer more "thorough" options later */
     

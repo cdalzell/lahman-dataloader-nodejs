@@ -22,8 +22,8 @@ MongoDBStrategy.prototype.initialize = function(config, callback) {
             throw err;
         }
 
-        this.db = database;
-        this.collection = db.collection(config.CollectionName);
+        db = database;
+        collection = db.collection(config.CollectionName);
         
         console.log('Connection Made');
         
@@ -32,8 +32,14 @@ MongoDBStrategy.prototype.initialize = function(config, callback) {
 };
 
 MongoDBStrategy.prototype.dropDB = function() {
-    console.log(this.db);
+    //console.log(db);
     console.log('in the mongo class');
+    
+};
+
+MongoDBStrategy.prototype.createTables = function(callback) {
+    console.log('No tables to create for a document store!');
+    callback(null);
 };
 
 module.exports = MongoDBStrategy;

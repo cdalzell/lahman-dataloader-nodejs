@@ -11,8 +11,8 @@ DBSetup.prototype.dropDB = function() {
     return this.strategy.dropDB();
 };
 
-DBSetup.prototype.createTables = function() {
-    return this.strategy.createTables();
+DBSetup.prototype.createTables = function(callback) {
+    return this.strategy.createTables(callback);
 };
 
 DBSetup.prototype.importData = function() {
