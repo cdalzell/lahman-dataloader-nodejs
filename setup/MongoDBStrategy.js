@@ -1,5 +1,6 @@
 var async = require('async');
 var csv = require('fast-csv'); // http://c2fo.github.io/fast-csv/index.html
+var fs = require('fs');
 var mongo = require('mongodb');
 var path = require('path');
 
@@ -51,7 +52,16 @@ MongoDBStrategy.prototype.importData = function(fileList, functionCallback) {
         if (path.extname(file).toLowerCase() === '.csv') {
             var recordType = path.basename(file).split('.')[0];
             console.log(recordType);
-            callback();
+            
+            //var stream = fs.createReadStream(file);
+            
+            csv.fromPath(file, { headers : true })
+                .on('record', function(data) {
+                    console.log(data);
+                })
+                .on('end', function() {
+                    callback();
+                });
         } else {
             callback();
         }
